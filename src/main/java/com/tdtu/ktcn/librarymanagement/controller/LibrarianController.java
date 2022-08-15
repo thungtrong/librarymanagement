@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tdtu.ktcn.librarymanagement.model.Librarian;
 import com.tdtu.ktcn.librarymanagement.service.LibrarianService;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {ConfigController.ORIGIN})
 @RestController
 @RequestMapping("librarian")
 public class LibrarianController {

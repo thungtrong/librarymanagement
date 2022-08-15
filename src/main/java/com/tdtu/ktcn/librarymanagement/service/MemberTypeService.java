@@ -17,7 +17,7 @@ import com.tdtu.ktcn.librarymanagement.repo.MemberTypeRepository;
 @Transactional
 public class MemberTypeService {
 	private final MemberTypeRepository memberTypeRepo;
-	private final static int PAGE_SIZE = 10;
+	private final static int PAGE_SIZE = 20;
 	
 	@Autowired
 	public MemberTypeService(MemberTypeRepository memberTypeRepo) {

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tdtu.ktcn.librarymanagement.model.MemberType;
 import com.tdtu.ktcn.librarymanagement.service.MemberTypeService;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {ConfigController.ORIGIN})
 @RestController
 @RequestMapping("membertype")
 public class MemberTypeController {

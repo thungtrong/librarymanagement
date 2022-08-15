@@ -1,19 +1,23 @@
 package com.tdtu.ktcn.librarymanagement.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -24,15 +28,19 @@ public class BookIssue {
 	@SequenceGenerator(name="book_issue_id_pk", allocationSize = 1)
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="book_issue_id_pk")
 	private Long id;
+	@JsonFormat(pattern=DatePattern.DEFAULT)
 	private Date dateStart;
+	@JsonFormat(pattern=DatePattern.DEFAULT)
 	private Date dateEnd;
 	private String note;
-	private Boolean status;
+	private Boolean status; // True - Da tra; False - chau tra
 	
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "book_issue_detail")
-	@JsonIgnore
-	private List<Book> book;
+	@JoinTable(name = "book_issue_detail",
+	joinColumns = @JoinColumn(name="book_issue_id", referencedColumnName="id"),
+            inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id")
+	)
+	private List<Book> books = new ArrayList<>();
 	
 	@ManyToOne
 	private Member member;
@@ -44,7 +52,7 @@ public class BookIssue {
 		// TODO Auto-generated constructor stub
 	}
 
-	public BookIssue(Long id, Date dateStart, Date dateEnd, String note, Boolean status, List<Book> book, Member member,
+	public BookIssue(Long id, Date dateStart, Date dateEnd, String note, Boolean status, List<Book> books, Member member,
 			Librarian librarian) {
 		super();
 		this.id = id;
@@ -52,7 +60,7 @@ public class BookIssue {
 		this.dateEnd = dateEnd;
 		this.note = note;
 		this.status = status;
-		this.book = book;
+		this.books = books;
 		this.member = member;
 		this.librarian = librarian;
 	}
@@ -97,12 +105,12 @@ public class BookIssue {
 		this.status = status;
 	}
 
-	public List<Book> getBook() {
-		return book;
+	public List<Book> getBooks() {
+		return books;
 	}
 
-	public void setBook(List<Book> book) {
-		this.book = book;
+	public void setBooks(List<Book> books) {
+		this.books = books;
 	}
 
 	public Member getMember() {

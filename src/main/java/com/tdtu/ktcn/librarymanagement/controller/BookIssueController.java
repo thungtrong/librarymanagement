@@ -1,5 +1,6 @@
 package com.tdtu.ktcn.librarymanagement.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,24 +18,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tdtu.ktcn.librarymanagement.model.Book;
 import com.tdtu.ktcn.librarymanagement.model.BookIssue;
 import com.tdtu.ktcn.librarymanagement.service.BookIssueService;
+import com.tdtu.ktcn.librarymanagement.service.BookService;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {ConfigController.ORIGIN})
 @RestController
-@RequestMapping("bookissue")
+@RequestMapping("book-issue")
 public class BookIssueController {
 	private BookIssueService bookIssueService;
+	private BookService bookService;
 
 	@Autowired
-	public BookIssueController(BookIssueService bookIssueservice) {
+	public BookIssueController(BookIssueService bookIssueservice, BookService bookService) {
 		this.bookIssueService = bookIssueservice;
+		this.bookService = bookService;
 	}
 
 	// CRUD
 	@PostMapping("/add")
 	public ResponseEntity<BookIssue> addBookIssue(@RequestBody BookIssue bookIssue) {
 		bookIssue = bookIssueService.addBookIssue(bookIssue);
+		updateBooksStatus(bookIssue.getBooks(), false);
 		return new ResponseEntity<>(bookIssue, HttpStatus.CREATED);
 	}
 
@@ -60,13 +66,38 @@ public class BookIssueController {
 
 	@PutMapping("/update")
 	public ResponseEntity<BookIssue> updateBookIssue(@RequestBody BookIssue bookIssue) {
-		bookIssue = bookIssueService.updateBookIssue(bookIssue);
+		try {
+			Boolean check = bookIssueService.findBookIssueById(bookIssue.getId()).getStatus();
+			bookIssue = bookIssueService.updateBookIssue(bookIssue);
+			if (check!= bookIssue.getStatus())
+			{
+				updateBooksStatus(bookIssue.getBooks(), bookIssue.getStatus());
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			bookIssue = null;
+		} 
+		
 		return new ResponseEntity<BookIssue>(bookIssue, HttpStatus.ACCEPTED);
 	}
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteBookIssueById(@RequestBody BookIssue bookIssue) {
+		updateBooksStatus(bookIssue.getBooks(), true);
 		bookIssueService.deleteBookIssueById(bookIssue.getId());
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
+	
+	private void updateBooksStatus(List<Book> books, Boolean status)
+	{
+		for (Book book: books)
+		{
+			book.setStatus(status);
+			this.bookService.updateBook(book);
+		}
+	}
+	
+	
+	
 }

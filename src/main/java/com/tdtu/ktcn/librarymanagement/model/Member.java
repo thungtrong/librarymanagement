@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="member")
 public class Member {
@@ -22,6 +24,7 @@ public class Member {
 	private String firstName;
 	private String lastName;
 	private Boolean gender;
+	@JsonFormat(pattern = DatePattern.DEFAULT)
 	private Date dateOfBirth;
 	private String contact;
 	private String email;

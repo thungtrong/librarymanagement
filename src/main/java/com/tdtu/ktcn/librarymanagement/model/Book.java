@@ -1,5 +1,6 @@
 package com.tdtu.ktcn.librarymanagement.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
 import javax.persistence.GeneratedValue;
@@ -23,12 +24,13 @@ public class Book {
 	private String tag;
 	private Boolean status;
 	private Integer typeDocument;
+	private String language;
 	private String publisher;
+	private String description;
+	
+	@Column(columnDefinition = "varchar(255) default '/images/default.jpg'")
 	private String img;
 
-	@ManyToOne
-	@JoinColumn(name = "language_id", foreignKey = @ForeignKey(name="book_language_id_fk"))
-	private Language language;
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", foreignKey = @ForeignKey(name="book_category_id_fk"))
@@ -62,6 +64,24 @@ public class Book {
 		this.status = status;
 		this.typeDocument = typeDocument;
 		this.publisher = publisher;
+		this.img = img;
+		this.category = category;
+	}
+	
+	
+
+	public Book(Integer id, String title, String authors, String tag, Boolean status, Integer typeDocument,
+			String language, String publisher, String description, String img, Category category) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.authors = authors;
+		this.tag = tag;
+		this.status = status;
+		this.typeDocument = typeDocument;
+		this.language = language;
+		this.publisher = publisher;
+		this.description = description;
 		this.img = img;
 		this.category = category;
 	}
@@ -136,6 +156,51 @@ public class Book {
 
 	public void setImg(String img) {
 		this.img = img;
+	}
+
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Book [id=");
+		builder.append(id);
+		builder.append(", title=");
+		builder.append(title);
+		builder.append(", authors=");
+		builder.append(authors);
+		builder.append(", tag=");
+		builder.append(tag);
+		builder.append(", status=");
+		builder.append(status);
+		builder.append(", typeDocument=");
+		builder.append(typeDocument);
+		builder.append(", language=");
+		builder.append(language);
+		builder.append(", publisher=");
+		builder.append(publisher);
+		builder.append(", description=");
+		builder.append(description);
+		builder.append(", img=");
+		builder.append(img);
+		builder.append(", category=");
+		builder.append(category);
+		builder.append("]");
+		return builder.toString();
 	}
 	
 	

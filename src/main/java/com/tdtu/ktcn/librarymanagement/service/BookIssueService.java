@@ -40,9 +40,10 @@ public class BookIssueService {
 	{
 		return bookIssueRepo.findAll(
 				PageRequest.of(page, PAGE_SIZE, 
-						Sort.Direction.DESC, sortBy)
+						Sort.Direction.ASC, sortBy)
 				);
 	}
+	
 	
 	public BookIssue findBookIssueById(Long id) throws Exception
 	{

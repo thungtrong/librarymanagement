@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="librarian")
 public class Librarian {
@@ -18,6 +20,7 @@ public class Librarian {
 	private String firstName;
 	private String lastName;
 	private Boolean gender;
+	@JsonFormat(pattern = DatePattern.DEFAULT)
 	private Date dateOfBirth;
 	private String contact;
 	private String email;

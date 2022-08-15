@@ -36,11 +36,24 @@ public class BookService {
 		return bookRepo.findAll();
 	}
 	
+	public List<Book> findBooksByTitleContains(String searchString)
+	{
+		return bookRepo.findAllByTitleContainsIgnoreCase(searchString);
+	}
+	
 	public Page<Book> findPageBook(int page, String sortBy)
 	{
 		return bookRepo.findAll(
 				PageRequest.of(page, PAGE_SIZE, 
-						Sort.Direction.DESC, sortBy)
+						Sort.Direction.ASC, sortBy)
+				);
+	}
+
+	public Page<Book> findPageBookByStatus(Boolean status, int page, String sortBy)
+	{
+		return bookRepo.findAllByStatus(status,
+				PageRequest.of(page, PAGE_SIZE, 
+						Sort.Direction.ASC, sortBy)
 				);
 	}
 	
@@ -49,10 +62,12 @@ public class BookService {
 		return bookRepo.findById(id).orElseThrow(() -> new Exception(String.format("Not found book have a id = %s", id)));
 	}
 	
+	
 	public Book updateBook(Book book)
 	{
 		return bookRepo.save(book);
 	}
+	
 	
 	public void deleteBookById(Integer id)
 	{

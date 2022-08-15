@@ -1,5 +1,6 @@
 package com.tdtu.ktcn.librarymanagement.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tdtu.ktcn.librarymanagement.model.Category;
 import com.tdtu.ktcn.librarymanagement.service.CategoryService;
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {ConfigController.ORIGIN})
 @RestController
 @RequestMapping("category")
 public class CategoryController {
@@ -40,10 +41,16 @@ public class CategoryController {
 	@GetMapping("/list")
 	public ResponseEntity<Page<Category>> getPageCategory(@RequestParam Optional<Integer> page,
 			@RequestParam Optional<String> sortBy) {
-		Page<Category> list = categoryService.findPageCategory(page.orElse(0), sortBy.orElse("id"));
+		Page<Category> list = categoryService.findPageCategory(page.orElse(0), sortBy.orElse("name"));
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
+	@GetMapping("/all")
+	public ResponseEntity<List<Category>> getAllCategory() {
+		List<Category> categories = categoryService.findAllCategory();
+		return new ResponseEntity<List<Category>>(categories, HttpStatus.OK);
+	}
+	
 	@GetMapping("/find/{id}")
 	public ResponseEntity<Category> findCategoryById(@PathVariable Integer id) {
 		Category category;

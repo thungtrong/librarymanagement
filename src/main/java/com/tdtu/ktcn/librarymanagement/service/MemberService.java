@@ -17,7 +17,7 @@ import com.tdtu.ktcn.librarymanagement.repo.MemberRepository;
 @Transactional
 public class MemberService {
 	private final MemberRepository memberRepo;
-	private final static int PAGE_SIZE = 10;
+	private final static int PAGE_SIZE = 4;
 	
 	@Autowired
 	public MemberService(MemberRepository memberRepo) {
@@ -40,7 +40,7 @@ public class MemberService {
 	{
 		return memberRepo.findAll(
 				PageRequest.of(page, PAGE_SIZE, 
-						Sort.Direction.DESC, sortBy)
+						Sort.Direction.ASC, sortBy)
 				);
 	}
 	
@@ -57,5 +57,10 @@ public class MemberService {
 	public void deleteMemberById(Integer id)
 	{
 		memberRepo.deleteById(id);
+	}
+	// Custom
+	public List<Member> findAllByFirstNameContainsAndLastNameContains(String firstname, String lastname)
+	{
+		return memberRepo.findAllByFirstNameContainsIgnoreCaseAndLastNameContainsIgnoreCase(firstname, lastname);
 	}
 }

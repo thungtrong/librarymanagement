@@ -17,7 +17,7 @@ import com.tdtu.ktcn.librarymanagement.repo.CategoryRepository;
 @Transactional
 public class CategoryService {
 	private final CategoryRepository categoryRepo;
-	private final static int PAGE_SIZE = 10;
+	private final static int PAGE_SIZE = 3;
 	
 	@Autowired
 	public CategoryService(CategoryRepository categoryRepo) {
@@ -40,7 +40,7 @@ public class CategoryService {
 	{
 		return categoryRepo.findAll(
 				PageRequest.of(page, PAGE_SIZE, 
-						Sort.Direction.DESC, sortBy)
+						Sort.Direction.ASC, sortBy)
 				);
 	}
 	

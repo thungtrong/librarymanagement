@@ -1,5 +1,6 @@
 package com.tdtu.ktcn.librarymanagement.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tdtu.ktcn.librarymanagement.model.Member;
 import com.tdtu.ktcn.librarymanagement.service.MemberService;
 
-@CrossOrigin(origins = { "http://localhost:4200" })
+@CrossOrigin(origins = {ConfigController.ORIGIN})
 @RestController
 @RequestMapping("member")
 public class MemberController {
@@ -41,7 +42,7 @@ public class MemberController {
 	@GetMapping("/list")
 	public ResponseEntity<Page<Member>> getPageMember(@RequestParam Optional<Integer> page,
 			@RequestParam Optional<String> sortBy) {
-		Page<Member> list = memberService.findPageMember(page.orElse(0), sortBy.orElse("id"));
+		Page<Member> list = memberService.findPageMember(page.orElse(0), sortBy.orElse("lastName"));
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
@@ -68,5 +69,16 @@ public class MemberController {
 	public ResponseEntity<?> deleteMemberById(@RequestBody Member member) {
 		memberService.deleteMemberById(member.getId());
 		return new ResponseEntity<Void>(HttpStatus.OK);
+	}
+	
+	// Custom
+	@GetMapping("/find-by-name")
+	public ResponseEntity<List<Member>> findAllByFirstNameContainsAndLastNameContains(
+			@RequestParam Optional<String> firstname,
+			@RequestParam Optional<String> lastname) {
+		List<Member> list = memberService.findAllByFirstNameContainsAndLastNameContains(
+				firstname.orElse(""), lastname.orElse(""));
+				
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 }
