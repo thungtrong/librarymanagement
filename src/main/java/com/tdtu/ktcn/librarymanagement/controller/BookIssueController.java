@@ -45,7 +45,8 @@ public class BookIssueController {
 	}
 
 	@GetMapping("/list")
-	public ResponseEntity<Page<BookIssue>> getPageBookIssue(@RequestParam Optional<Integer> page,
+	public ResponseEntity<Page<BookIssue>> getPageBookIssue(
+			@RequestParam Optional<Integer> page,
 			@RequestParam Optional<String> sortBy) {
 		Page<BookIssue> list = bookIssueService.findPageBookIssue(page.orElse(0), sortBy.orElse("id"));
 		return new ResponseEntity<>(list, HttpStatus.OK);

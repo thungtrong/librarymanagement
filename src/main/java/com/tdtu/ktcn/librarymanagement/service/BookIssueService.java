@@ -40,7 +40,7 @@ public class BookIssueService {
 	{
 		return bookIssueRepo.findAll(
 				PageRequest.of(page, PAGE_SIZE, 
-						Sort.Direction.ASC, sortBy)
+						Sort.Direction.DESC, sortBy)
 				);
 	}
 	
