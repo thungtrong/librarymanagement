@@ -48,14 +48,6 @@ public class BookService {
 						Sort.Direction.ASC, sortBy)
 				);
 	}
-
-	public Page<Book> findPageBookByStatus(Boolean status, int page, String sortBy)
-	{
-		return bookRepo.findAllByStatus(status,
-				PageRequest.of(page, PAGE_SIZE, 
-						Sort.Direction.ASC, sortBy)
-				);
-	}
 	
 	public Book findBookById(Integer id) throws Exception
 	{

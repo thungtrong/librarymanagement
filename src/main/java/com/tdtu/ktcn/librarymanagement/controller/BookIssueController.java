@@ -40,7 +40,6 @@ public class BookIssueController {
 	@PostMapping("/add")
 	public ResponseEntity<BookIssue> addBookIssue(@RequestBody BookIssue bookIssue) {
 		bookIssue = bookIssueService.addBookIssue(bookIssue);
-		updateBooksStatus(bookIssue.getBooks(), false);
 		return new ResponseEntity<>(bookIssue, HttpStatus.CREATED);
 	}
 
@@ -70,10 +69,7 @@ public class BookIssueController {
 		try {
 			Boolean check = bookIssueService.findBookIssueById(bookIssue.getId()).getStatus();
 			bookIssue = bookIssueService.updateBookIssue(bookIssue);
-			if (check!= bookIssue.getStatus())
-			{
-				updateBooksStatus(bookIssue.getBooks(), bookIssue.getStatus());
-			}
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,19 +81,10 @@ public class BookIssueController {
 
 	@DeleteMapping("/delete")
 	public ResponseEntity<?> deleteBookIssueById(@RequestBody BookIssue bookIssue) {
-		updateBooksStatus(bookIssue.getBooks(), true);
 		bookIssueService.deleteBookIssueById(bookIssue.getId());
 		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 	
-	private void updateBooksStatus(List<Book> books, Boolean status)
-	{
-		for (Book book: books)
-		{
-			book.setStatus(status);
-			this.bookService.updateBook(book);
-		}
-	}
 	
 	
 	

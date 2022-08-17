@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.tdtu.ktcn.librarymanagement.model.Book;
 
 public interface BookRepository extends JpaRepository<Book, Integer>{
-	Page<Book> findAllByStatus(Boolean status,Pageable pageable);
 	
 	List<Book> findAllByTitleContainsIgnoreCase(String keyword);
 }

@@ -22,7 +22,6 @@ public class Book {
 	private String title;
 	private String authors;
 	private String tag;
-	private Boolean status;
 	private Integer typeDocument;
 	private String language;
 	private String publisher;
@@ -40,28 +39,26 @@ public class Book {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Book(Integer id, String title, String authors, String tag, Boolean status, Integer typeDocument,
+	public Book(Integer id, String title, String authors, String tag, Integer typeDocument,
 			String publisher, Category category) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.authors = authors;
 		this.tag = tag;
-		this.status = status;
 		this.typeDocument = typeDocument;
 		this.publisher = publisher;
 		this.category = category;
 	}
 	
 
-	public Book(Integer id, String title, String authors, String tag, Boolean status, Integer typeDocument,
+	public Book(Integer id, String title, String authors, String tag, Integer typeDocument,
 			String publisher, String img, Category category) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.authors = authors;
 		this.tag = tag;
-		this.status = status;
 		this.typeDocument = typeDocument;
 		this.publisher = publisher;
 		this.img = img;
@@ -77,7 +74,6 @@ public class Book {
 		this.title = title;
 		this.authors = authors;
 		this.tag = tag;
-		this.status = status;
 		this.typeDocument = typeDocument;
 		this.language = language;
 		this.publisher = publisher;
@@ -116,14 +112,6 @@ public class Book {
 
 	public void setTag(String tag) {
 		this.tag = tag;
-	}
-
-	public Boolean getStatus() {
-		return status;
-	}
-
-	public void setStatus(Boolean status) {
-		this.status = status;
 	}
 
 	public Integer getTypeDocument() {
@@ -185,8 +173,6 @@ public class Book {
 		builder.append(authors);
 		builder.append(", tag=");
 		builder.append(tag);
-		builder.append(", status=");
-		builder.append(status);
 		builder.append(", typeDocument=");
 		builder.append(typeDocument);
 		builder.append(", language=");

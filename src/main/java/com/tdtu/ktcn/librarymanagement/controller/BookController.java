@@ -68,21 +68,12 @@ public class BookController {
 	
 	@DeleteMapping("/delete")
 	public ResponseEntity<Boolean> deleteBookById(@RequestBody Book book) {
-		if (book.getStatus()) {
-			return new ResponseEntity<Boolean>(false, HttpStatus.NOT_ACCEPTABLE);
-		}
 		bookService.deleteBookById(book.getId());
 		return new ResponseEntity<Boolean>(true, HttpStatus.OK);
 	}
 	
 	// Custom
 
-	@GetMapping("/find-by-status")
-	public ResponseEntity<Page<Book>> getPageBookByStatus(@RequestParam Optional<Boolean> status,
-			@RequestParam Optional<Integer> page, @RequestParam Optional<String> sortBy) {
-		Page<Book> list = bookService.findPageBookByStatus(status.orElse(true), page.orElse(0), sortBy.orElse("title"));
-		return new ResponseEntity<>(list, HttpStatus.OK);
-	}
 
 	@GetMapping("/find-by-title")
 	public ResponseEntity<List<Book>> findBookByTitle(@RequestParam Optional<String> search) {
