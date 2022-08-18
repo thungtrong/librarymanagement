@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,7 +36,7 @@ public class BookIssue {
 	private String note;
 	private Boolean status; // True - Da tra; False - chau tra
 	
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(name = "book_issue_detail",
 	joinColumns = @JoinColumn(name="book_issue_id", referencedColumnName="id"),
             inverseJoinColumns=@JoinColumn(name="book_id", referencedColumnName="id")

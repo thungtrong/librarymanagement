@@ -26,7 +26,6 @@ public class Book {
 	private String language;
 	private String publisher;
 	private String description;
-	
 	@Column(columnDefinition = "varchar(255) default '/images/default.jpg'")
 	private String img;
 
